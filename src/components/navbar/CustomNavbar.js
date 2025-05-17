@@ -1,6 +1,6 @@
 import React, { useState ,useContext,useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
-import logo from '../../assets/Pinterest_Logo.svg.png';
+import logo from '../../assets/Mood_Canvas_Logo.jpeg';
 import noteContext from '../../context/noteContext';
 import './customNavbar.css'
 
@@ -94,6 +94,7 @@ const PinterestNavbar = ({ setInputVal }) => {
           placeholder="Search for Pins .."
           aria-label="Search"
           value={searchText}
+          style={{marginRight:"0.5rem"}}
           onChange={handleInputChange}
         />
         <button type="submit" className="btn btn-outline-primary">
@@ -107,7 +108,7 @@ const PinterestNavbar = ({ setInputVal }) => {
         <>
           <span><button className="createpin" onClick={moveToCreatePin}>Create Pin</button></span>
           <span><button className="createpin" onClick={moveToMyPinBoard}>My PinBoards</button></span>
-          <span style={{ color: "white" }}>Namaste 🙏{username.charAt(0).toUpperCase() + username.slice(1)}</span>
+          <span style={{ color: "white" }}>Namaste 🙏 {username.charAt(0).toUpperCase() + username.slice(1)}</span>
           <span><button className="logout" onClick={logout}>Logout</button></span>
         </>
       )}

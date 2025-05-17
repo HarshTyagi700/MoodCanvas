@@ -1,5 +1,5 @@
 import React from 'react';
-import splashLogo from '../../assets/pinterest_pins.jpg'
+import splashLogo from '../../assets/Splash_Screen.jpeg'
 
 const SplashScreen = () => {
   return (

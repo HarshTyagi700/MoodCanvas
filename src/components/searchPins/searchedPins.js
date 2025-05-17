@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import logo from '../../assets/Pinterest_Logo.svg.png';
+import logo from '../../assets/Mood_Canvas_Logo.jpeg';
 import SplashScreen from '../splashScreen/SplashScreen';
 import './../splashScreen/splashscreen.css'; 
 
