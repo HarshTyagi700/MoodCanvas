@@ -2,9 +2,10 @@ import React, { useState, useContext, useEffect } from "react";
 import PinPreview from "../pinpreview/pinpreview";
 import Modal from "../temp/modal";
 import noteContext from "../../context/noteContext";
-import Badge from '@mui/material/Badge';
-import { useNavigate } from 'react-router-dom';
+import Badge from "@mui/material/Badge";
+import { useNavigate } from "react-router-dom";
 import { convertCompilerOptionsFromJson } from "typescript";
+import "../../styles.css";
 
 const Pin = ({ pin }) => {
   const [showPinDetails, setShowPinDetails] = useState(false);
@@ -12,7 +13,7 @@ const Pin = ({ pin }) => {
   const [isLiked, setLike] = useState(false);
   const [likeCount, setLikeCount] = useState(pin.likeCount);
   const state = useContext(noteContext);
-  const navigate= useNavigate();
+  const navigate = useNavigate();
 
   // const [isLoggedIn,set]
 
@@ -68,51 +69,48 @@ const Pin = ({ pin }) => {
     setOpen(false);
   };
 
-  const toggleLike=()=>{
+  const toggleLike = () => {
     // console.log("Login hai??");
     // console.log(localStorage.getItem("isLoggedIn"));
-    if(localStorage.getItem("isLoggedIn")==null)
-    navigate("/login");
-    const updateLike = async () =>  {
-      try{
-        
-        const useremail=localStorage.getItem("useremail");
-        const interactedPinId=pin.id;
-        const liked=!isLiked;
-        const response = await fetch("http://localhost:7000/pinterest/analytics-api/updateLike",{
-            method : "POST",
+    if (localStorage.getItem("isLoggedIn") == null) navigate("/login");
+    const updateLike = async () => {
+      try {
+        const useremail = localStorage.getItem("useremail");
+        const interactedPinId = pin.id;
+        const liked = !isLiked;
+        const response = await fetch(
+          "http://localhost:7000/pinterest/analytics-api/updateLike",
+          {
+            method: "POST",
             headers: {
-                'Content-Type': 'application/json'
+              "Content-Type": "application/json",
             },
-            body: JSON.stringify({useremail, interactedPinId,liked})   
+            body: JSON.stringify({ useremail, interactedPinId, liked }),
+          }
+        );
 
-        }) ;    
+        console.log("Before likeStatus:", isLiked);
 
-        console.log("Before likeStatus:",isLiked);
+        if (localStorage.getItem("isLoggedIn") == null) navigate("/login");
 
-        if(localStorage.getItem("isLoggedIn")==null)
-        navigate("/login");
-
-        setLikeCount(likeCount+(isLiked?-1:1));
+        setLikeCount(likeCount + (isLiked ? -1 : 1));
         setLike(!isLiked);
-        
 
-        response.text().then((txt)=> console.log(txt));
+        response.text().then((txt) => console.log(txt));
         // console.log("After likeStatus:",isLiked);
-
       } catch (error) {
         console.log("Error occured while updating like status.", error);
       }
-
-
     };
     updateLike();
-  }
+  };
 
   return (
     <>
       <div className="col-md-4 mb-4">
-        <div className="card">
+        <div
+          className="card"
+        >
           <img
             src={`data:image/png;base64,${pin.image.data}`}
             alt={pin.title}
