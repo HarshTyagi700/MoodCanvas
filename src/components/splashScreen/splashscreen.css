@@ -1,0 +1,58 @@
+.loading .splash-screen {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+  }
+  
+  .circular{
+
+  
+    border-radius: 25%;
+    overflow: hidden;
+  }
+  .splash-screen {
+    /* Your splash screen styles */
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+  }
+  @keyframes wave {
+    0% {
+      transform: rotate(0deg);
+    }
+    25% {
+      transform: rotate(-10deg);
+    }
+    50% {
+      transform: rotate(10deg);
+    }
+    75% {
+      transform: rotate(-10deg);
+    }
+    100% {
+      transform: rotate(0deg);
+    }
+  }
+  
+  .wave-animation {
+    animation-name: wave;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+  }
+
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.1);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  
+  .pulse-animation {
+    animation-name: pulse;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+  }
+  
