@@ -1,6 +1,6 @@
-# Getting Started with Create React App
+# MoodCanvas React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+MoodCanvas is a full-stack, microservices-based Pinterest-like web application. It’s designed for scalable, real-time pinboard interactions with robust service communication, reactive feedback updates, and efficient resource discovery and caching.
 
 ## Available Scripts
 
