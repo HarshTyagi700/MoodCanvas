@@ -9,13 +9,16 @@
 .logout{
     margin-right: 10px;
     padding-bottom:25px;
-    width: 80px;
-    height: 30px;
+    width: 10rem;
+    height: 2rem;
     border-radius: 5px;
     font-weight: bold;
     border: 1px solid #0395F6;
     background-color: #e23c0a;
     color: white;
+    align-items: center;
+    align-content: center;
+    
 }
 .createpin{
     margin-right: 10px;

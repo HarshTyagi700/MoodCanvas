@@ -116,7 +116,7 @@ const Pin = ({ pin }) => {
             alt={pin.title}
             onClick={pinDetailsHandler}
             className="card-img-top"
-            style={{ height: "200px", objectFit: "cover" }}
+            style={{ height: "18rem", objectFit: "cover" }}
           />
 
           <div className="card-body">

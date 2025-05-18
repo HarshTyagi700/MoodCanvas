@@ -103,7 +103,7 @@ const PinterestNavbar = ({ setInputVal }) => {
       </form>
 
       {username == null ? (
-        <a href="/login">Login/Register</a>
+        <a className="logout" href="/login"><center>Login/Register</center></a>
       ) : (
         <>
           <span><button className="createpin" onClick={moveToCreatePin}>Create Pin</button></span>

@@ -8,12 +8,13 @@ const MyBoards = () => {
   const [pinsShow, setPinsShow] = useState(false);
   const [pinsList, setPinsList] = useState([]);
   const [selectedBoardName, setSelectedBoardName] = useState("");
+  const [selectedBoardId, setSelectedBoardId] = useState("");
 
   useEffect(() => {
     const fetchPinboards = async () => {
       try {
         const formData = new FormData();
-        formData.append("emailId", localStorage.getItem("useremail"));
+        formData.append("useremail", localStorage.getItem("useremail"));
 
         const response = await fetch(
           "http://localhost:7000/pinterest/pinboard-api/getPinboards",
@@ -36,14 +37,47 @@ const MyBoards = () => {
     fetchPinboards();
   }, []);
 
+  const handleDeletePin = async (pinId) => {
+    try {
+      const response = await fetch(
+        "http://localhost:7000/pinterest/pinboard-api/deleteFromPinBoard",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: localStorage.getItem("token"),
+          },
+          body: JSON.stringify({
+            pinBoardId: selectedBoardId,
+            pinBoardName: selectedBoardName,
+            useremail: localStorage.getItem("useremail"),
+            pinIdList: [pinId],
+          }),
+        }
+      );
+
+      if (response.ok) {
+        setPinsList((prev) => prev.filter((pin) => pin.id !== pinId));
+      } else {
+        console.error("Failed to delete pin");
+      }
+    } catch (error) {
+      console.error("Error deleting pin:", error);
+    }
+  };
+
   const showPins = async (pinboard) => {
     try {
       setSelectedBoardName(pinboard.pinBoardName);
+      setSelectedBoardId(pinboard.pinBoardId); // Save board ID
+
       const promises = (pinboard.pinIdList || []).map((pinId) =>
         fetch(`http://localhost:7000/pinterest/pins-api/pin/${pinId}`)
       );
       const responses = await Promise.all(promises);
-      const pinResponses = await Promise.all(responses.map((res) => res.json()));
+      const pinResponses = await Promise.all(
+        responses.map((res) => res.json())
+      );
       setPinsList(pinResponses.filter((pin) => pin !== null));
       setPinsShow(true);
     } catch (error) {
@@ -58,8 +92,9 @@ const MyBoards = () => {
 
   return (
     <>
+    
       {pinsShow ? (
-        <div style={{ margin: "2rem" }}>
+        <div style={{ margin: "3.5rem" }}>
           <Typography variant="h4" sx={{ mb: 2, fontWeight: 600 }}>
             {selectedBoardName}
           </Typography>
@@ -77,13 +112,35 @@ const MyBoards = () => {
             <div
               className="pins-grid"
               style={{
-                display: "flex",
-                flexWrap: "wrap",
+                display: "grid",
+                gridTemplateColumns: "repeat(2, 1fr)",
                 gap: "1.5rem",
               }}
             >
               {pinsList.map((pin) => (
-                <Pin key={pin.id} pin={pin} />
+                <div
+                  key={pin.id}
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    backgroundColor: "#fff",
+                    padding: "1rem",
+                    borderRadius: "12px",
+                    boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
+                  }}
+                >
+                  <Pin pin={pin} />
+                  <Button
+                    variant="contained"
+                    color="error"
+                    size="small"
+                    style={{ marginTop: "0.5rem" }}
+                    onClick={() => handleDeletePin(pin.id)}
+                  >
+                    Delete
+                  </Button>
+                </div>
               ))}
             </div>
           ) : (
